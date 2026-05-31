@@ -1,8 +1,21 @@
+// Ensure startup is visible in logs
+console.log('[Server] Process starting...');
+
 import express from 'express';
 import { loadProductsPlans } from '../monetization/products';
 import { handleSeederWebhook, handleCancelSubscription } from '../monetization/webhook';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// Catch unhandled errors
+process.on('uncaughtException', (err) => {
+  console.error('[Server] Uncaught exception:', err);
+  process.exit(1);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('[Server] Unhandled rejection:', reason);
+  process.exit(1);
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
