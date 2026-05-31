@@ -16,4 +16,4 @@ RUN npm ci --omit=dev
 ENV NODE_ENV=production
 ENV PORT=3000
 EXPOSE 3000
-CMD ["npx", "tsx", "src/server/index.ts"]
+CMD ["./node_modules/.bin/tsx", "src/server/index.ts"]
