@@ -7,7 +7,13 @@ COPY . .
 RUN npm run build
 
 # Serve stage
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+FROM node:22-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/src ./src
+COPY --from=build /app/package*.json ./
+RUN npm ci
+ENV NODE_ENV=production
+ENV PORT=80
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npx", "tsx", "src/server/index.ts"]
