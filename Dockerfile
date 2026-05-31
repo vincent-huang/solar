@@ -12,7 +12,7 @@ WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/src ./src
 COPY --from=build /app/package*.json ./
-RUN npm ci
+RUN npm ci --omit=dev
 ENV NODE_ENV=production
 ENV PORT=80
 EXPOSE 80
